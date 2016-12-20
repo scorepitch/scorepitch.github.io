@@ -10,11 +10,3 @@
 .row {
   margin-bottom: 20px;
 }
-
-.table-button {
-  background-color: #464545;
-}
-
-.table-button:active {
-  background-color: #1a1a1a
-}
