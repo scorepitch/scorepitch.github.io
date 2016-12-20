@@ -1,0 +1,8 @@
+.score-table {
+  font-size: 80%;
+  color: #aaa;
+}
+
+.score-table tr:last-child {
+  color: #fff;
+}
