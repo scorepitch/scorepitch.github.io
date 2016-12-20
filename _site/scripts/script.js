@@ -1,6 +1,6 @@
 $(document).ready(function () {
   
-  //$('#gameModal').modal("show");
+  $('#gameModal').modal("show");
   
   $('#newGameButton').click(function () {
     $('#playersModal').modal("show");
