@@ -19,3 +19,11 @@
 .btn-group .btn-lg {
   padding: 18px 6px;
 }
+
+#gameModal {
+  top: 140px;
+}
+
+#playersModal {
+  top: 15px;
+}

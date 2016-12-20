@@ -61,21 +61,21 @@
       <p>Winner and partner:</p>
       <div class="btn-group btn-group-justified">
         <div class="btn-group">
-          <button type="button" class="btn btn-default">Corbin</button>          
+          <button type="button" class="btn btn-default">Player 1</button>          
         </div>
         <div class="btn-group">
-          <button type="button" class="btn btn-default">Grandma</button>          
+          <button type="button" class="btn btn-default">Player 2</button>          
         </div>
         <div class="btn-group">
-          <button type="button" class="btn btn-default">Marissa</button>          
+          <button type="button" class="btn btn-default">Player 3</button>          
         </div>
       </div>
       <div class="btn-group btn-group-justified">
         <div class="btn-group">
-          <button type="button" class="btn btn-default">Denise</button>          
+          <button type="button" class="btn btn-default">Player 4</button>          
         </div>
         <div class="btn-group">
-          <button type="button" class="btn btn-default">Scott</button>          
+          <button type="button" class="btn btn-default">Player 5</button>          
         </div>
         <div class="btn-group">
           <button type="button" class="btn btn-default">Alone</button>          
@@ -85,10 +85,28 @@
   </div>
   <div class="row">
     <div class="col-md-12">
+      <p>Points scored:</p>
+      <div class="input-group">
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-lg btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                  <span class="glyphicon glyphicon-minus"></span>
+              </button>
+          </span>
+          <input type="text" name="quant[1]" class="form-control input-lg input-number" value="7" min="0" max="13">
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-lg btn-number" data-type="plus" data-field="quant[1]">
+                  <span class="glyphicon glyphicon-plus"></span>
+              </button>
+          </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
       <button class="btn btn-default btn-lg btn-block">Undo Last Round <span class="glyphicon glyphicon-refresh"></span></button>
       <button class="btn btn-primary btn-lg btn-block">Score Round <span class="glyphicon glyphicon-check"></span></button>      
     </div>
-  </div>
+  </div>  
   <hr>
   <h3 class="text-center">Scores</h3>
   <div class="row">
@@ -151,19 +169,61 @@
   </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <!-- <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
+        <h4 class="modal-title">Modal title</h4>
+      </div> -->
       <div class="modal-body">
-        ...
+        <button id="newGameButton" class="btn btn-lg btn-block btn-default" data-dismiss="modal">New Game</button>
+        <button id="loadGameButton" class="btn btn-lg btn-block btn-default" data-dismiss="modal">Load Game</button>
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="playersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="players-input">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Player 1</span>
+              <input  name="player1"class="form-control input-lg" type="text"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Player 2</span>
+              <input name="player2" class="form-control input-lg" type="text"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Player 3</span>
+              <input  name="player3"class="form-control input-lg" type="text"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Player 4</span>
+              <input  name="player4"class="form-control input-lg" type="text"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Player 5</span>
+              <input  name="player5"class="form-control input-lg" type="text"/>
+            </div>
+          </div>
+          <button id="startGameButton" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Start Game</button>
+        </div>
       </div>
     </div>
   </div>
