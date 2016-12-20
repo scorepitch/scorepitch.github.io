@@ -7,7 +7,7 @@ title: Game
   <div class="row">
     <div class="col-md-12">
       <p>Winning bid:</p>
-      <div class="btn-group btn-group-justified">
+      <div class="btn-group btn-group-justified bidGroup">
         <div class="btn-group">
           <button type="button" class="btn btn-default btn-lg">9</button>          
         </div>
@@ -30,43 +30,34 @@ title: Game
           <button type="button" class="btn btn-default btn-lg">DS</button>          
         </div>
       </div>
-      <!-- <div class="btn-group btn-group-justified">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">13</button>          
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">S</button>          
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">DS</button>          
-        </div>
-      </div> -->
     </div>
   </div>
   
   <div class="row">
     <div class="col-md-12">
       <p>Winner and partner:</p>
-      <div class="btn-group btn-group-justified">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Player 1</button>          
+      <div class="playerGroup">
+        <div class="btn-group btn-group-justified">
+          <div class="btn-group">
+            <button id="p1Button" type="button" class="btn btn-default">Player 1</button>          
+          </div>
+          <div class="btn-group">
+            <button id="p2Button" type="button" class="btn btn-default">Player 2</button>          
+          </div>
+          <div class="btn-group">
+            <button id="p3Button" type="button" class="btn btn-default">Player 3</button>          
+          </div>
         </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Player 2</button>          
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Player 3</button>          
-        </div>
-      </div>
-      <div class="btn-group btn-group-justified">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Player 4</button>          
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Player 5</button>          
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default">Alone</button>          
+        <div class="btn-group btn-group-justified">
+          <div class="btn-group">
+            <button id="p4Button" type="button" class="btn btn-default">Player 4</button>          
+          </div>
+          <div class="btn-group">
+            <button id="p5Button" type="button" class="btn btn-default">Player 5</button>          
+          </div>
+          <div class="btn-group">
+            <button id="aloneButton" type="button" class="btn btn-default">Alone</button>          
+          </div>
         </div>
       </div>
     </div>
@@ -76,7 +67,7 @@ title: Game
       <p>Points scored:</p>
       <div class="input-group">
           <span class="input-group-btn">
-              <button type="button" class="btn btn-default btn-lg btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+              <button type="button" class="btn btn-default btn-lg btn-number" data-type="minus" data-field="quant[1]">
                   <span class="glyphicon glyphicon-minus"></span>
               </button>
           </span>
