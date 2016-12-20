@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  //$('#myModal').modal("show");
+  $('#gameModal').modal("show");
 });
 
 var currentPlayers = {};

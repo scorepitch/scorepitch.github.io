@@ -1,12 +1,21 @@
 .score-table {
   font-size: 80%;
   color: #aaa;
+  text-align: center;
 }
 
 .score-table tr:last-child {
   color: #fff;
 }
 
+.score-table > tbody {
+  font-size: 150%;
+}
+
 .row {
   margin-bottom: 20px;
+}
+
+.btn-group .btn-lg {
+  padding: 18px 6px;
 }
