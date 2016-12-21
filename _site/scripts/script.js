@@ -2,27 +2,55 @@ $(document).ready(function () {
   
   $('#gameModal').modal("show");
   
+  // New game
   $('#newGameButton').click(function () {
     $('#playersModal').modal("show");
   });
   
+  // Start game
   $('#startGameButton').click(function () {
     NewGame($('input[name=player1]').val(), $('input[name=player2]').val(), $('input[name=player3]').val(), $('input[name=player4]').val(), $('input[name=player5]').val());
   });
     
+  // Load game
   $('#loadGameButton').click(function () {
     LoadGame();
   });
   
-  $('.playerGroup button').click(function() {
-    var thisButton = $(this);
-    $('.playerGroup button').removeClass('active');
-    thisButton.addClass('active');
+  // Score round
+  $('#scoreButton').click(function() {
+    if(!Validate())
+    {
+      return;
+    }
+    ScoreRound();    
   });
   
+  // Undo round
+  $('#undoButton').click(function() {
+    
+  });
+  
+  // Toggle player buttons, 2 max
+  var numSelected = 0;
+  var lastSelected;
+  $('.playerGroup button').click(function() {
+    var thisButton = $(this);
+    if(numSelected > 1)
+    {
+        $('.playerGroup button').removeClass('active');
+        numSelected = 1;
+        lastSelected.addClass('active');
+    }
+    thisButton.addClass('active');
+    lastSelected = thisButton;
+    numSelected++;
+  });
+  
+  // Toggle bid buttons, 1 max
   $('.bidGroup button').click(function() {
     var thisButton = $(this);
-    $('.playerGroup button').removeClass('active');
+    $('.bidGroup button').removeClass('active');
     thisButton.addClass('active');
   });
   
@@ -71,13 +99,13 @@ $('.input-number').change(function() {
     if(valueCurrent >= minValue) {
         $('.btn-number[data-type="minus"][data-field="'+name+'"]').removeAttr('disabled')
     } else {
-        alert('Sorry, the minimum value was reached');
+        //alert('Sorry, the minimum value was reached');
         $(this).val($(this).data('oldValue'));
     }
     if(valueCurrent <= maxValue) {
         $('.btn-number[data-type="plus"][data-field="'+name+'"]').removeAttr('disabled')
     } else {
-        alert('Sorry, the maximum value was reached');
+        //alert('Sorry, the maximum value was reached');
         $(this).val($(this).data('oldValue'));
     }
 });
@@ -101,9 +129,26 @@ $('input-number').keydown(function (e) {
 
 var player1, player2, player3, player4, player5;
 
-function ScoreRound(bid, partner1, partner2)
+function ScoreRound()
 {
+  var points = $('#pointsScored').val();
+  var otherPoints = 13-points;
+  var bid = $('.bidGroup button.active').html();
   
+  // Get text from partner buttons
+  var partners = $('.playerGroup button.active');
+  var partner1 = partners.eq(0).html();
+  var partner2 = partners.eq(1).html();
+    
+  var p1Score = player1 == partner1 || player1 == partner2 ? points : otherPoints;
+  var p2Score = player2 == partner1 || player2 == partner2 ? points : otherPoints;
+  var p3Score = player3 == partner1 || player3 == partner2 ? points : otherPoints;
+  var p4Score = player4 == partner1 || player4 == partner2 ? points : otherPoints;
+  var p5Score = player5 == partner1 || player5 == partner2 ? points : otherPoints;
+  
+  var roundData = '<tr><td>' + p1Score + '</td><td>' + p2Score + '</td><td>' + p3Score + '</td><td>' + p4Score + '</td><td>' + p5Score + '</td><td>' + bid + '</td></tr>';
+  var table = $('.scoreTable tr:last');
+  table.after(roundData);
 }
 
 function NewGame(p1, p2, p3, p4, p5)
@@ -143,4 +188,39 @@ function SetPlayers(p1, p2, p3, p4, p5)
   $('#p3Button').html(p3);
   $('#p4Button').html(p4);
   $('#p5Button').html(p5);
+  $('#p1Table').html(p1);
+  $('#p2Table').html(p2);
+  $('#p3Table').html(p3);
+  $('#p4Table').html(p4);
+  $('#p5Table').html(p5);
+}
+
+function Validate()
+{
+  var result = true;
+  var bid = $('.bidGroup button.active');
+  var partners = $('.playerGroup button.active');
+  $('.validate').removeClass('hidden');
+  
+  if(bid.length == 0)
+  {
+    result = false;
+  }
+  else {
+    $('#bidMessage').addClass('hidden');
+  }
+  
+  if(partners.length < 2)
+  {
+    result = false;
+  }
+  else {
+    $('#partnerMessage').addClass('hidden');
+  }
+  
+  if(result)
+  {
+    $('.validate').addClass('hidden');
+  }  
+  return result;
 }

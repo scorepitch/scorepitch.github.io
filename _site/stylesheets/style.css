@@ -1,25 +1,52 @@
-.score-table {
+.row {
+  margin-bottom: 20px;
+}
+
+/* Score table */
+.scoreTable {
   font-size: 80%;
   color: #aaa;
   text-align: center;
 }
 
-.score-table tr:last-child {
+.scoreTable .truncate {
+  max-width: 20px;
+}
+
+.scoreTable .truncate span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.scoreTable tr:last-child,
+.scoreTable th {
   color: #fff;
 }
 
-.score-table > tbody {
+.scoreTable > tbody {
   font-size: 150%;
 }
 
-.row {
-  margin-bottom: 20px;
-}
-
+/* Buttons */
 .btn-group .btn-lg {
   padding: 18px 6px;
 }
 
+.playerGroup button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Validation */
+.validate {
+  color: red;
+}
+
+/* Modals */
 #gameModal {
   top: 140px;
 }
