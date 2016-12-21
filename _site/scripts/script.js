@@ -149,7 +149,8 @@ $('input-number').keydown(function (e) {
 });
 /* End number input */
 
-var player1, player2, player3, player4, player5;
+var player1 = "Player 1", player2 = "Player 2", player3 = "Player 3", player4 = "Player 4", player5 = "Player 5";
+var p1Score = 0, p2Score = 0, p3Score = 0, p4Score = 0, p5Score = 0;
 var numSelected = 0;
 var lastSelected;
 
@@ -164,12 +165,12 @@ function ScoreRound()
   var partner1 = partners.eq(0).html();
   var partner2 = partners.eq(1).html();
   
-  // Check if each player was a partner, give points
-  var p1Score = player1 == partner1 || player1 == partner2 ? points : otherPoints;
-  var p2Score = player2 == partner1 || player2 == partner2 ? points : otherPoints;
-  var p3Score = player3 == partner1 || player3 == partner2 ? points : otherPoints;
-  var p4Score = player4 == partner1 || player4 == partner2 ? points : otherPoints;
-  var p5Score = player5 == partner1 || player5 == partner2 ? points : otherPoints;
+  // Check if each player was a partner, give points - '+' casts to int
+  p1Score = player1 == partner1 || player1 == partner2 ? (+p1Score + +points) : (+p1Score + +otherPoints);
+  p2Score = player2 == partner1 || player2 == partner2 ? (+p2Score + +points) : (+p2Score + +otherPoints);
+  p3Score = player3 == partner1 || player3 == partner2 ? (+p3Score + +points) : (+p3Score + +otherPoints);
+  p4Score = player4 == partner1 || player4 == partner2 ? (+p4Score + +points) : (+p4Score + +otherPoints);
+  p5Score = player5 == partner1 || player5 == partner2 ? (+p5Score + +points) : (+p5Score + +otherPoints);
   
   // Add scores to table
   var roundData = '<tr><td>' + p1Score + '</td><td>' + p2Score + '</td><td>' + p3Score + '</td><td>' + p4Score + '</td><td>' + p5Score + '</td><td>' + bid + '</td></tr>';
@@ -189,17 +190,15 @@ function UndoRound()
 {
   var lastRow = $('.scoreTable tbody tr:last');
   lastRow.remove();
+  lastRow.find('td').each(function (i, element) {
+    alert(i + ' ' + val);
+  });
   SaveGame();
 }
 
 function NewGame(p1, p2, p3, p4, p5)
 {
-  player1 = p1;
-  player2 = p2;
-  player3 = p3;
-  player4 = p4;
-  player5 = p5;
-  SetPlayers(player1, player2, player3, player4, player5);
+  SetPlayers(p1, p2, p3, p4, p5);
   SaveGame();
 }
 
@@ -226,6 +225,12 @@ function SaveGame()
 
 function SetPlayers(p1, p2, p3, p4, p5)
 {
+  player1 = p1 ? p1 : "Player 1";
+  player2 = p2 ? p2 : "Player 2";
+  player3 = p3 ? p3 : "Player 3";
+  player4 = p4 ? p4 : "Player 4";
+  player5 = p5 ? p5 : "Player 5";
+  
   if(p1)
   {
     $('#p1Button').html(p1);
