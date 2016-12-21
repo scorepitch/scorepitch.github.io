@@ -1,5 +1,9 @@
 $(document).ready(function () {
   
+  $('#playersModal').on('shown.bs.modal', function () {
+    $('body').addClass('modal-open');
+  });
+  
   $('#gameModal').modal("show");
   
   // New game
@@ -9,6 +13,7 @@ $(document).ready(function () {
   
   // Start game
   $('#startGameButton').click(function () {
+    $('#gameModal').modal('hide');
     NewGame($('input[name=player1]').val(), $('input[name=player2]').val(), $('input[name=player3]').val(), $('input[name=player4]').val(), $('input[name=player5]').val());
   });
     
