@@ -3,13 +3,9 @@ $(document).ready(function () {
   $('#clearStorage').click(function() {
     localStorage.clear();
   });
-<<<<<<< HEAD
 
   window.scrollTo(0,1);
 
-=======
-
->>>>>>> e2a826960a75055bd930ed6ea60f51c1bfa160dd
   if(localStorage.getItem('player1') != null)
   {
     $('#gameModal').modal("show");
@@ -154,8 +150,7 @@ $('input-number').keydown(function (e) {
 /* End number input */
 
 var player1 = "Player 1", player2 = "Player 2", player3 = "Player 3", player4 = "Player 4", player5 = "Player 5";
-var p1Score = 0, p2Score = 0, p3Score = 0, p4Score = 0, p5Score = 0;
-var p1PrevScore = 0, p2PrevScore = 0, p3PrevScore = 0, p4PrevScore = 0, p5PrevScore = 0;
+var shootIt = 1;
 var numSelected = 0;
 var lastSelected;
 
@@ -165,33 +160,53 @@ function ScoreRound()
   var otherPoints = 13-points;
   var bid = $('.bidGroup button.active').html();
 
+  // Did they shoot the moon?
+  if (bid == "S")
+  {
+    bid = 13;
+    shootIt = 2;
+  }
+
+  // Did they double shoot the moon?
+  if (bid == "DS")
+  {
+    bid = 13;
+    shootIt = 4;
+  }
+
+  // Did they make their bid?
+  if (+points < +bid)
+    points = -1*bid*shootIt;
+
   // Get text from partner buttons
   var partners = $('.playerGroup button.active');
   var partner1 = partners.eq(0).html();
   var partner2 = partners.eq(1).html();
 
-  if (points < bid)
-    points = (0-1)*bid;
+  // Read previous round score from the table to add new points for new score
+  try
+  {
+    var lastRow = $('.scoreTable tbody tr:last');
+    var p1PrevScore = lastRow.get(0).children[0].firstChild.data;
+    var p2PrevScore = lastRow.get(0).children[1].firstChild.data;
+    var p3PrevScore = lastRow.get(0).children[2].firstChild.data;
+    var p4PrevScore = lastRow.get(0).children[3].firstChild.data;
+    var p5PrevScore = lastRow.get(0).children[4].firstChild.data;
+  } catch (e)
+  {
+    var p1PrevScore = 0;
+    var p2PrevScore = 0;
+    var p3PrevScore = 0;
+    var p4PrevScore = 0;
+    var p5PrevScore = 0;
+  }
 
   // Check if each player was a partner, give points
-  var p1Score = player1 == partner1 || player1 == partner2 ? points : otherPoints;
-  var p2Score = player2 == partner1 || player2 == partner2 ? points : otherPoints;
-  var p3Score = player3 == partner1 || player3 == partner2 ? points : otherPoints;
-  var p4Score = player4 == partner1 || player4 == partner2 ? points : otherPoints;
-  var p5Score = player5 == partner1 || player5 == partner2 ? points : otherPoints;
-
-  p1PrevScore = p1Score;
-  p2PrevScore = p2Score;
-  p3PrevScore = p3Score;
-  p4PrevScore = p4Score;
-  p5PrevScore = p5Score;
-
-  // Check if each player was a partner, give points - '+' casts to int
-  p1Score = player1 == partner1 || player1 == partner2 ? (+p1Score + +points) : (+p1Score + +otherPoints);
-  p2Score = player2 == partner1 || player2 == partner2 ? (+p2Score + +points) : (+p2Score + +otherPoints);
-  p3Score = player3 == partner1 || player3 == partner2 ? (+p3Score + +points) : (+p3Score + +otherPoints);
-  p4Score = player4 == partner1 || player4 == partner2 ? (+p4Score + +points) : (+p4Score + +otherPoints);
-  p5Score = player5 == partner1 || player5 == partner2 ? (+p5Score + +points) : (+p5Score + +otherPoints);
+  var p1Score = player1 == partner1 || player1 == partner2 ? (+p1PrevScore + +points * +shootIt) : (+p1PrevScore + +otherPoints);
+  var p2Score = player2 == partner1 || player2 == partner2 ? (+p2PrevScore + +points * +shootIt) : (+p2PrevScore + +otherPoints);
+  var p3Score = player3 == partner1 || player3 == partner2 ? (+p3PrevScore + +points * +shootIt) : (+p3PrevScore + +otherPoints);
+  var p4Score = player4 == partner1 || player4 == partner2 ? (+p4PrevScore + +points * +shootIt) : (+p4PrevScore + +otherPoints);
+  var p5Score = player5 == partner1 || player5 == partner2 ? (+p5PrevScore + +points * +shootIt) : (+p5PrevScore + +otherPoints);
 
   // Add scores to table
   var roundData = '<tr><td>' + p1Score + '</td><td>' + p2Score + '</td><td>' + p3Score + '</td><td>' + p4Score + '</td><td>' + p5Score + '</td><td>' + bid + '</td></tr>';
@@ -211,11 +226,6 @@ function UndoRound()
 {
   var lastRow = $('.scoreTable tbody tr:last');
   lastRow.remove();
-  p1Score = p1PrevScore;
-  p2Score = p2PrevScore;
-  p3Score = p3PrevScore;
-  p4Score = p4PrevScore;
-  p5Score = p5PrevScore;
   SaveGame();
 }
 
