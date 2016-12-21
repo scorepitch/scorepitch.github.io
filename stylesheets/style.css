@@ -3,14 +3,15 @@
 }
 
 /* Score table */
-.scoreTable {
-  font-size: 80%;
+.scoreTable,
+.scoreTable th {
+  font-size: 90%;
   color: #aaa;
   text-align: center;
 }
 
 .scoreTable .truncate {
-  max-width: 20px;
+  max-width: 16%;
 }
 
 .scoreTable .truncate span {
@@ -39,6 +40,22 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.playerGroup .btn-group-justified:first-child .btn:first-child {
+  border-bottom-left-radius: 0px;
+}
+
+.playerGroup .btn-group-justified:first-child .btn:last-child {
+  border-bottom-right-radius: 0px;
+}
+
+.playerGroup .btn-group-justified:last-child .btn:first-child {
+  border-top-left-radius: 0px;
+}
+
+.playerGroup .btn-group-justified:last-child .btn:last-child {
+  border-top-right-radius: 0px;
 }
 
 /* Validation */

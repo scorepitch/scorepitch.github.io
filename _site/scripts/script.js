@@ -28,7 +28,7 @@ $(document).ready(function () {
   
   // Undo round
   $('#undoButton').click(function() {
-    
+    UndoRound();
   });
   
   // Toggle player buttons, 2 max
@@ -147,8 +147,17 @@ function ScoreRound()
   var p5Score = player5 == partner1 || player5 == partner2 ? points : otherPoints;
   
   var roundData = '<tr><td>' + p1Score + '</td><td>' + p2Score + '</td><td>' + p3Score + '</td><td>' + p4Score + '</td><td>' + p5Score + '</td><td>' + bid + '</td></tr>';
-  var table = $('.scoreTable tr:last');
-  table.after(roundData);
+  var table = $('.scoreTable tbody');
+  table.append(roundData);
+  
+  SaveGame();
+}
+
+function UndoRound()
+{
+  var lastRow = $('.scoreTable tbody tr:last');
+  lastRow.remove();
+  SaveGame();
 }
 
 function NewGame(p1, p2, p3, p4, p5)
@@ -169,6 +178,7 @@ function LoadGame()
   player3 = localStorage.getItem('player3');
   player4 = localStorage.getItem('player4');
   player5 = localStorage.getItem('player5');
+  $('.scoreTable tbody').append(localStorage.getItem('table'));
   SetPlayers(player1, player2, player3, player4, player5);
 }
 
@@ -179,6 +189,7 @@ function SaveGame()
   localStorage.setItem('player3', player3);
   localStorage.setItem('player4', player4);
   localStorage.setItem('player5', player5);
+  localStorage.setItem('table', $('.scoreTable tbody').html());
 }
 
 function SetPlayers(p1, p2, p3, p4, p5)
