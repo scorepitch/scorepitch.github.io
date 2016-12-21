@@ -32,8 +32,6 @@ $(document).ready(function () {
   });
   
   // Toggle player buttons, 2 max
-  var numSelected = 0;
-  var lastSelected;
   $('.playerGroup button').click(function() {
     var thisButton = $(this);
     if(numSelected > 1)
@@ -45,6 +43,11 @@ $(document).ready(function () {
     thisButton.addClass('active');
     lastSelected = thisButton;
     numSelected++;
+    if(numSelected == 2)
+    {
+      $('#partnerMessage').removeClass('hidden');
+      $('#partnerMessage').addClass('hidden');
+    }
   });
   
   // Toggle bid buttons, 1 max
@@ -52,6 +55,8 @@ $(document).ready(function () {
     var thisButton = $(this);
     $('.bidGroup button').removeClass('active');
     thisButton.addClass('active');
+    $('#bidMessage').removeClass('hidden');
+    $('#bidMessage').addClass('hidden');
   });
   
   /* Number input  http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input */
@@ -128,6 +133,8 @@ $('input-number').keydown(function (e) {
 /* End number input */
 
 var player1, player2, player3, player4, player5;
+var numSelected = 0;
+var lastSelected;
 
 function ScoreRound()
 {
@@ -139,16 +146,24 @@ function ScoreRound()
   var partners = $('.playerGroup button.active');
   var partner1 = partners.eq(0).html();
   var partner2 = partners.eq(1).html();
-    
+  
+  // Check if each player was a partner, give points
   var p1Score = player1 == partner1 || player1 == partner2 ? points : otherPoints;
   var p2Score = player2 == partner1 || player2 == partner2 ? points : otherPoints;
   var p3Score = player3 == partner1 || player3 == partner2 ? points : otherPoints;
   var p4Score = player4 == partner1 || player4 == partner2 ? points : otherPoints;
   var p5Score = player5 == partner1 || player5 == partner2 ? points : otherPoints;
   
+  // Add scores to table
   var roundData = '<tr><td>' + p1Score + '</td><td>' + p2Score + '</td><td>' + p3Score + '</td><td>' + p4Score + '</td><td>' + p5Score + '</td><td>' + bid + '</td></tr>';
   var table = $('.scoreTable tbody');
   table.append(roundData);
+  
+  // Reset form
+  $('.playerGroup button').removeClass('active');
+  $('.bidGroup button').removeClass('active');
+  lastSelected = 0;
+  numSelected = 0;
   
   SaveGame();
 }

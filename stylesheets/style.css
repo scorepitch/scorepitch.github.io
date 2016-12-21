@@ -11,7 +11,13 @@
 }
 
 .scoreTable .truncate {
-  max-width: 16%;
+  max-width: 20px;
+  /*uncomment for columns to fit to content - large content forces horizontal scrolling*/
+  /*max-width: 16%;*/
+}
+
+.scoreTable .truncate:last-child {
+  width: 30px;
 }
 
 .scoreTable .truncate span {
@@ -60,7 +66,13 @@
 
 /* Validation */
 .validate {
-  color: red;
+  /*color: red;*/
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+  color: white;
+  border-radius: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /* Modals */
