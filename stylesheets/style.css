@@ -12,6 +12,7 @@
 
 .scoreTable .truncate {
   max-width: 20px;
+  width: 16%;
   /*uncomment for columns to fit to content - large content forces horizontal scrolling*/
   /*max-width: 16%;*/
 }

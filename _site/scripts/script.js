@@ -1,10 +1,22 @@
 $(document).ready(function () {
   
+  $('#clearStorage').click(function() {
+    localStorage.clear();
+  });
+  
+  window.scrollTo(0,1);
+  
+  if(localStorage.getItem('player1') != null)
+  {
+    $('#gameModal').modal("show");
+  }
+  else {
+    $('#playersModal').modal("show");
+  }
+  
   $('#playersModal').on('shown.bs.modal', function () {
     $('body').addClass('modal-open');
   });
-  
-  $('#gameModal').modal("show");
   
   // New game
   $('#newGameButton').click(function () {
