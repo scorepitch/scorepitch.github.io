@@ -209,16 +209,35 @@ function SaveGame()
 
 function SetPlayers(p1, p2, p3, p4, p5)
 {
-  $('#p1Button').html(p1);
-  $('#p2Button').html(p2);
-  $('#p3Button').html(p3);
-  $('#p4Button').html(p4);
-  $('#p5Button').html(p5);
-  $('#p1Table').html(p1);
-  $('#p2Table').html(p2);
-  $('#p3Table').html(p3);
-  $('#p4Table').html(p4);
-  $('#p5Table').html(p5);
+  if(p1)
+  {
+    $('#p1Button').html(p1);
+    $('#p1Table').html(p1);
+  }
+  
+  if(p2)
+  {
+    $('#p2Button').html(p2);
+    $('#p2Table').html(p2);
+  }
+  
+  if(p3)
+  {
+    $('#p3Button').html(p3);
+    $('#p3Table').html(p3);
+  }
+  
+  if(p4)
+  {
+    $('#p4Button').html(p4);
+    $('#p4Table').html(p4);
+  }
+  
+  if(p5)
+  {
+    $('#p5Button').html(p5);
+    $('#p5Table').html(p5);
+  }
 }
 
 function Validate()
