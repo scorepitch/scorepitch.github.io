@@ -3,9 +3,13 @@ $(document).ready(function () {
   $('#clearStorage').click(function() {
     localStorage.clear();
   });
+<<<<<<< HEAD
 
   window.scrollTo(0,1);
 
+=======
+
+>>>>>>> e2a826960a75055bd930ed6ea60f51c1bfa160dd
   if(localStorage.getItem('player1') != null)
   {
     $('#gameModal').modal("show");
@@ -149,7 +153,9 @@ $('input-number').keydown(function (e) {
 });
 /* End number input */
 
-var player1, player2, player3, player4, player5;
+var player1 = "Player 1", player2 = "Player 2", player3 = "Player 3", player4 = "Player 4", player5 = "Player 5";
+var p1Score = 0, p2Score = 0, p3Score = 0, p4Score = 0, p5Score = 0;
+var p1PrevScore = 0, p2PrevScore = 0, p3PrevScore = 0, p4PrevScore = 0, p5PrevScore = 0;
 var numSelected = 0;
 var lastSelected;
 
@@ -174,6 +180,19 @@ function ScoreRound()
   var p4Score = player4 == partner1 || player4 == partner2 ? points : otherPoints;
   var p5Score = player5 == partner1 || player5 == partner2 ? points : otherPoints;
 
+  p1PrevScore = p1Score;
+  p2PrevScore = p2Score;
+  p3PrevScore = p3Score;
+  p4PrevScore = p4Score;
+  p5PrevScore = p5Score;
+
+  // Check if each player was a partner, give points - '+' casts to int
+  p1Score = player1 == partner1 || player1 == partner2 ? (+p1Score + +points) : (+p1Score + +otherPoints);
+  p2Score = player2 == partner1 || player2 == partner2 ? (+p2Score + +points) : (+p2Score + +otherPoints);
+  p3Score = player3 == partner1 || player3 == partner2 ? (+p3Score + +points) : (+p3Score + +otherPoints);
+  p4Score = player4 == partner1 || player4 == partner2 ? (+p4Score + +points) : (+p4Score + +otherPoints);
+  p5Score = player5 == partner1 || player5 == partner2 ? (+p5Score + +points) : (+p5Score + +otherPoints);
+
   // Add scores to table
   var roundData = '<tr><td>' + p1Score + '</td><td>' + p2Score + '</td><td>' + p3Score + '</td><td>' + p4Score + '</td><td>' + p5Score + '</td><td>' + bid + '</td></tr>';
   var table = $('.scoreTable tbody');
@@ -192,17 +211,17 @@ function UndoRound()
 {
   var lastRow = $('.scoreTable tbody tr:last');
   lastRow.remove();
+  p1Score = p1PrevScore;
+  p2Score = p2PrevScore;
+  p3Score = p3PrevScore;
+  p4Score = p4PrevScore;
+  p5Score = p5PrevScore;
   SaveGame();
 }
 
 function NewGame(p1, p2, p3, p4, p5)
 {
-  player1 = p1;
-  player2 = p2;
-  player3 = p3;
-  player4 = p4;
-  player5 = p5;
-  SetPlayers(player1, player2, player3, player4, player5);
+  SetPlayers(p1, p2, p3, p4, p5);
   SaveGame();
 }
 
@@ -229,6 +248,12 @@ function SaveGame()
 
 function SetPlayers(p1, p2, p3, p4, p5)
 {
+  player1 = p1 ? p1 : "Player 1";
+  player2 = p2 ? p2 : "Player 2";
+  player3 = p3 ? p3 : "Player 3";
+  player4 = p4 ? p4 : "Player 4";
+  player5 = p5 ? p5 : "Player 5";
+
   if(p1)
   {
     $('#p1Button').html(p1);
