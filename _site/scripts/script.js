@@ -151,6 +151,7 @@ $('input-number').keydown(function (e) {
 
 var player1 = "Player 1", player2 = "Player 2", player3 = "Player 3", player4 = "Player 4", player5 = "Player 5";
 var p1Score = 0, p2Score = 0, p3Score = 0, p4Score = 0, p5Score = 0;
+var p1PrevScore = 0, p2PrevScore = 0, p3PrevScore = 0, p4PrevScore = 0, p5PrevScore = 0;
 var numSelected = 0;
 var lastSelected;
 
@@ -164,6 +165,12 @@ function ScoreRound()
   var partners = $('.playerGroup button.active');
   var partner1 = partners.eq(0).html();
   var partner2 = partners.eq(1).html();
+  
+  p1PrevScore = p1Score;
+  p2PrevScore = p2Score;
+  p3PrevScore = p3Score;
+  p4PrevScore = p4Score;
+  p5PrevScore = p5Score;
   
   // Check if each player was a partner, give points - '+' casts to int
   p1Score = player1 == partner1 || player1 == partner2 ? (+p1Score + +points) : (+p1Score + +otherPoints);
@@ -190,9 +197,11 @@ function UndoRound()
 {
   var lastRow = $('.scoreTable tbody tr:last');
   lastRow.remove();
-  lastRow.find('td').each(function (i, element) {
-    alert(i + ' ' + val);
-  });
+  p1Score = p1PrevScore;
+  p2Score = p2PrevScore;
+  p3Score = p3PrevScore;
+  p4Score = p4PrevScore;
+  p5Score = p5PrevScore;
   SaveGame();
 }
 
