@@ -4,8 +4,6 @@ $(document).ready(function () {
     localStorage.clear();
   });
   
-  window.scrollTo(0,1);
-  
   if(localStorage.getItem('player1') != null)
   {
     $('#gameModal').modal("show");
