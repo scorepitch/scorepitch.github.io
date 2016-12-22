@@ -1,30 +1,33 @@
 $(document).ready(function () {
   
+  $('#playersModal').on('shown.bs.modal', function () {
+    ClearPlayers();
+    $('body').addClass('modal-open');
+  });
+  
+  // Check storage for game
   $('#clearStorage').click(function() {
     localStorage.clear();
   });
   
   if(localStorage.getItem('player1') != null)
   {
-    $('#gameModal').modal("show");
+    $('#gameModal').modal('show');
   }
   else {
-    $('#playersModal').modal("show");
+    $('#playersModal').modal('show');
   }
   
-  $('#playersModal').on('shown.bs.modal', function () {
-    $('body').addClass('modal-open');
-  });
-  
   // New game
-  $('#newGameButton').click(function () {
-    $('#playersModal').modal("show");
+  $('.newGameButton').click(function () {
+    $('#playersModal').modal('show');
+    ClearPlayers();
   });
   
   // Start game
   $('#startGameButton').click(function () {
     $('#gameModal').modal('hide');
-    NewGame($('input[name=player1]').val(), $('input[name=player2]').val(), $('input[name=player3]').val(), $('input[name=player4]').val(), $('input[name=player5]').val());
+    NewGame();
   });
     
   // Load game
@@ -44,6 +47,11 @@ $(document).ready(function () {
   // Undo round
   $('#undoButton').click(function() {
     UndoRound();
+  });
+  
+  // Play again
+  $('#playAgainButton').click(function() {
+    PlayAgain();
   });
   
   // Toggle player buttons, 2 max
@@ -147,7 +155,7 @@ $('input-number').keydown(function (e) {
 });
 /* End number input */
 
-var player1 = "Player 1", player2 = "Player 2", player3 = "Player 3", player4 = "Player 4", player5 = "Player 5";
+var player1 = 'Player 1', player2 = 'Player 2', player3 = 'Player 3', player4 = 'Player 4', player5 = 'Player 5';
 var p1Score = 0, p2Score = 0, p3Score = 0, p4Score = 0, p5Score = 0;
 var p1PrevScore = 0, p2PrevScore = 0, p3PrevScore = 0, p4PrevScore = 0, p5PrevScore = 0;
 var numSelected = 0;
@@ -188,7 +196,77 @@ function ScoreRound()
   lastSelected = 0;
   numSelected = 0;
   
+  var p1Win = p1Score >= 52 && p1Score >= Math.max(p2Score, p3Score, p4Score, p5Score);
+  var p2Win = p2Score >= 52 && p2Score >= Math.max(p1Score, p3Score, p4Score, p5Score);
+  var p3Win = p3Score >= 52 && p3Score >= Math.max(p1Score, p2Score, p4Score, p5Score);
+  var p4Win = p4Score >= 52 && p4Score >= Math.max(p1Score, p2Score, p3Score, p5Score);
+  var p5Win = p5Score >= 52 && p5Score >= Math.max(p1Score, p2Score, p3Score, p4Score);
+  if(p1Win || p2Win || p3Win || p4Win || p5Win)
+  {
+    WinGame(p1Win, p2Win, p3Win, p4Win, p5Win);
+  }  
+    
   SaveGame();
+}
+
+function WinGame(p1Win, p2Win, p3Win, p4Win, p5Win)
+{
+  var winners = [];
+  if(p1Win)
+  {
+    winners.push([player1, p1Score]);
+  }
+  
+  if(p2Win)
+  {
+    winners.push([player2, p2Score]);
+  }
+  
+  if(p3Win)
+  {
+    winners.push([player3, p3Score]);
+  }
+  
+  if(p4Win)
+  {
+    winners.push([player4, p4Score]);
+  }
+  
+  if(p5Win)
+  {
+    winners.push([player5, p5Score]);
+  }
+  
+  var message = '';
+  if(winners.length > 0)
+  {
+    for(var i = 0; i < winners.length; i++)
+    {
+      if(i == 0)
+      {
+        message += winners[i][0];
+      }
+      else if(i == winners.length-1)
+      {
+        message += ' and ' + winners[i][0];
+      }
+      else
+      {
+        message += ', ' + winners[i][0];
+      }
+      
+    }
+    if(winners.length > 1)
+    {
+      message += ' tie<br>with a score of ' + winners[0][1] + '!';      
+    }
+    else {
+      message += ' wins<br>with a score of ' + winners[0][1] + '!';
+    }    
+  }
+  
+  $('#winMessage').html(message);
+  $('#winModal').modal('show');
 }
 
 function UndoRound()
@@ -203,9 +281,15 @@ function UndoRound()
   SaveGame();
 }
 
-function NewGame(p1, p2, p3, p4, p5)
+function NewGame()
 {
+  var p1 = $('input[name=player1]').val();
+  var p2 = $('input[name=player2]').val();
+  var p3 = $('input[name=player3]').val();
+  var p4 = $('input[name=player4]').val();
+  var p5 = $('input[name=player5]').val();
   SetPlayers(p1, p2, p3, p4, p5);
+  ClearGame();
   SaveGame();
 }
 
@@ -220,6 +304,11 @@ function LoadGame()
   SetPlayers(player1, player2, player3, player4, player5);
 }
 
+function PlayAgain()
+{
+  ClearGame();
+}
+
 function SaveGame()
 {
   localStorage.setItem('player1', player1);
@@ -230,13 +319,34 @@ function SaveGame()
   localStorage.setItem('table', $('.scoreTable tbody').html());
 }
 
+function ClearPlayers()
+{
+  $('#players-input input').each(function(i, element) 
+  { 
+    element.val(''); 
+  });
+  SetPlayers('Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5');
+}
+
+function ClearGame()
+{
+  // If it was on the max or min value, the plur or minus will still be disabled
+  //$('#pointsScored').val(7);
+  $('.scoreTable tbody').empty();
+  p1Score = 0;
+  p2Score = 0;
+  p3Score = 0;
+  p4Score = 0;
+  p5Score = 0;
+}
+
 function SetPlayers(p1, p2, p3, p4, p5)
 {
-  player1 = p1 ? p1 : "Player 1";
-  player2 = p2 ? p2 : "Player 2";
-  player3 = p3 ? p3 : "Player 3";
-  player4 = p4 ? p4 : "Player 4";
-  player5 = p5 ? p5 : "Player 5";
+  player1 = p1 ? p1 : 'Player 1';
+  player2 = p2 ? p2 : 'Player 2';
+  player3 = p3 ? p3 : 'Player 3';
+  player4 = p4 ? p4 : 'Player 4';
+  player5 = p5 ? p5 : 'Player 5';
   
   if(p1)
   {
