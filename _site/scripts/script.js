@@ -1,11 +1,15 @@
 $(document).ready(function () {
-
+  
   $('#clearStorage').click(function() {
     localStorage.clear();
   });
+<<<<<<< HEAD
 
   window.scrollTo(0,1);
 
+=======
+  
+>>>>>>> 0c866c2a7c7f2b5f9389d4f5ee72c0e25eeb6b69
   if(localStorage.getItem('player1') != null)
   {
     $('#gameModal').modal("show");
@@ -13,41 +17,41 @@ $(document).ready(function () {
   else {
     $('#playersModal').modal("show");
   }
-
+  
   $('#playersModal').on('shown.bs.modal', function () {
     $('body').addClass('modal-open');
   });
-
+  
   // New game
   $('#newGameButton').click(function () {
     $('#playersModal').modal("show");
   });
-
+  
   // Start game
   $('#startGameButton').click(function () {
     $('#gameModal').modal('hide');
     NewGame($('input[name=player1]').val(), $('input[name=player2]').val(), $('input[name=player3]').val(), $('input[name=player4]').val(), $('input[name=player5]').val());
   });
-
+    
   // Load game
   $('#loadGameButton').click(function () {
     LoadGame();
   });
-
+  
   // Score round
   $('#scoreButton').click(function() {
     if(!Validate())
     {
       return;
     }
-    ScoreRound();
+    ScoreRound();    
   });
-
+  
   // Undo round
   $('#undoButton').click(function() {
     UndoRound();
   });
-
+  
   // Toggle player buttons, 2 max
   $('.playerGroup button').click(function() {
     var thisButton = $(this);
@@ -66,7 +70,7 @@ $(document).ready(function () {
       $('#partnerMessage').addClass('hidden');
     }
   });
-
+  
   // Toggle bid buttons, 1 max
   $('.bidGroup button').click(function() {
     var thisButton = $(this);
@@ -75,21 +79,21 @@ $(document).ready(function () {
     $('#bidMessage').removeClass('hidden');
     $('#bidMessage').addClass('hidden');
   });
-
+  
   /* Number input  http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input */
   $('.btn-number').click(function(e){
     e.preventDefault();
-
+    
     fieldName = $(this).attr('data-field');
     type      = $(this).attr('data-type');
     var input = $('input[name="'+fieldName+'"]');
     var currentVal = parseInt(input.val());
     if (!isNaN(currentVal)) {
         if(type == 'minus') {
-
+            
             if(currentVal > input.attr('min')) {
                 input.val(currentVal - 1).change();
-            }
+            } 
             if(parseInt(input.val()) == input.attr('min')) {
                 $(this).attr('disabled', true);
             }
@@ -112,11 +116,11 @@ $('.input-number').focusin(function(){
    $(this).data('oldValue', $(this).val());
 });
 $('.input-number').change(function() {
-
+    
     minValue =  parseInt($(this).attr('min'));
     maxValue =  parseInt($(this).attr('max'));
     valueCurrent = parseInt($(this).val());
-
+    
     name = $(this).attr('name');
     if(valueCurrent >= minValue) {
         $('.btn-number[data-type="minus"][data-field="'+name+'"]').removeAttr('disabled')
@@ -135,7 +139,7 @@ $('input-number').keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
              // Allow: Ctrl+A
-            (e.keyCode == 65 && e.ctrlKey === true) ||
+            (e.keyCode == 65 && e.ctrlKey === true) || 
              // Allow: home, end, left, right
             (e.keyCode >= 35 && e.keyCode <= 39)) {
                  // let it happen, don't do anything
@@ -159,6 +163,7 @@ function ScoreRound()
   var points = $('#pointsScored').val();
   var otherPoints = 13-points;
   var bid = $('.bidGroup button.active').html();
+<<<<<<< HEAD
 
   // Did they shoot the moon?
   if (bid == "S")
@@ -178,10 +183,14 @@ function ScoreRound()
   if (+points < +bid)
     points = -1*bid*shootIt;
 
+=======
+  
+>>>>>>> 0c866c2a7c7f2b5f9389d4f5ee72c0e25eeb6b69
   // Get text from partner buttons
   var partners = $('.playerGroup button.active');
   var partner1 = partners.eq(0).html();
   var partner2 = partners.eq(1).html();
+<<<<<<< HEAD
 
   // Read previous round score from the table to add new points for new score
   try
@@ -208,17 +217,33 @@ function ScoreRound()
   var p4Score = player4 == partner1 || player4 == partner2 ? (+p4PrevScore + +points * +shootIt) : (+p4PrevScore + +otherPoints);
   var p5Score = player5 == partner1 || player5 == partner2 ? (+p5PrevScore + +points * +shootIt) : (+p5PrevScore + +otherPoints);
 
+=======
+  
+  p1PrevScore = p1Score;
+  p2PrevScore = p2Score;
+  p3PrevScore = p3Score;
+  p4PrevScore = p4Score;
+  p5PrevScore = p5Score;
+  
+  // Check if each player was a partner, give points - '+' casts to int
+  p1Score = player1 == partner1 || player1 == partner2 ? (+p1Score + +points) : (+p1Score + +otherPoints);
+  p2Score = player2 == partner1 || player2 == partner2 ? (+p2Score + +points) : (+p2Score + +otherPoints);
+  p3Score = player3 == partner1 || player3 == partner2 ? (+p3Score + +points) : (+p3Score + +otherPoints);
+  p4Score = player4 == partner1 || player4 == partner2 ? (+p4Score + +points) : (+p4Score + +otherPoints);
+  p5Score = player5 == partner1 || player5 == partner2 ? (+p5Score + +points) : (+p5Score + +otherPoints);
+  
+>>>>>>> 0c866c2a7c7f2b5f9389d4f5ee72c0e25eeb6b69
   // Add scores to table
   var roundData = '<tr><td>' + p1Score + '</td><td>' + p2Score + '</td><td>' + p3Score + '</td><td>' + p4Score + '</td><td>' + p5Score + '</td><td>' + bid + '</td></tr>';
   var table = $('.scoreTable tbody');
   table.append(roundData);
-
+  
   // Reset form
   $('.playerGroup button').removeClass('active');
   $('.bidGroup button').removeClass('active');
   lastSelected = 0;
   numSelected = 0;
-
+  
   SaveGame();
 }
 
@@ -263,31 +288,31 @@ function SetPlayers(p1, p2, p3, p4, p5)
   player3 = p3 ? p3 : "Player 3";
   player4 = p4 ? p4 : "Player 4";
   player5 = p5 ? p5 : "Player 5";
-
+  
   if(p1)
   {
     $('#p1Button').html(p1);
     $('#p1Table').html(p1);
   }
-
+  
   if(p2)
   {
     $('#p2Button').html(p2);
     $('#p2Table').html(p2);
   }
-
+  
   if(p3)
   {
     $('#p3Button').html(p3);
     $('#p3Table').html(p3);
   }
-
+  
   if(p4)
   {
     $('#p4Button').html(p4);
     $('#p4Table').html(p4);
   }
-
+  
   if(p5)
   {
     $('#p5Button').html(p5);
@@ -301,7 +326,7 @@ function Validate()
   var bid = $('.bidGroup button.active');
   var partners = $('.playerGroup button.active');
   $('.validate').removeClass('hidden');
-
+  
   if(bid.length == 0)
   {
     result = false;
@@ -309,7 +334,7 @@ function Validate()
   else {
     $('#bidMessage').addClass('hidden');
   }
-
+  
   if(partners.length < 2)
   {
     result = false;
@@ -317,10 +342,10 @@ function Validate()
   else {
     $('#partnerMessage').addClass('hidden');
   }
-
+  
   if(result)
   {
     $('.validate').addClass('hidden');
-  }
+  }  
   return result;
 }
