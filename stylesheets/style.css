@@ -18,7 +18,7 @@
 }
 
 .scoreTable .truncate:last-child {
-  width: 30px;
+  /*width: 20px;*/
 }
 
 .scoreTable .truncate span {
@@ -83,4 +83,8 @@
 
 #playersModal {
   top: 15px;
+}
+
+#winModal {
+  top: 120px;
 }
